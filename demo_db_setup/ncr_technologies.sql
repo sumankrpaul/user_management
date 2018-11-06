@@ -24,6 +24,7 @@ CREATE TABLE `user_details` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `user_email_id` varchar(255) NOT NULL,
   `user_password` varchar(255) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  `user_dp` text,
   `user_phone_no` bigint(10) UNSIGNED DEFAULT NULL,
   `user_first_name` varchar(255) NOT NULL,
   `user_last_name` varchar(255) NOT NULL,
@@ -31,10 +32,12 @@ CREATE TABLE `user_details` (
   `user_technical_experties` mediumint(3) UNSIGNED NOT NULL,
   `user_years_of_exp` mediumint(3) UNSIGNED NOT NULL,
   `user_experience_level` mediumint(3) UNSIGNED NOT NULL,
-  `user_is_admin` tinyint(1) UNSIGNED NOT NULL COMMENT '0 -> Normal user, 1-> Admin'
+  `user_is_admin` tinyint(1) UNSIGNED NOT NULL COMMENT '0 -> Normal user, 1-> Admin',
+  `user_is_active` tinyint(1) UNSIGNED NOT NULL COMMENT '0 -> user inactive, 1-> user active'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `user_details` (`user_id`, `user_email_id`, `user_password`, `user_phone_no`, `user_first_name`, `user_last_name`, `user_company_name`, `user_technical_experties`, `user_years_of_exp`, `user_experience_level`, `user_is_admin`) VALUES(1, 'smnkumarpaul@gmail.com', 'pass', 983042080, 'suman kumar', 'paul', 'phoenix robotix pvt ltd.', 1, 1, 2, 1);
+INSERT INTO `user_details` VALUES(1, 'smnkumarpaul@gmail.com', 'pass', NULL, 983042080, 'suman kumar', 'paul', 'phoenix robotix pvt ltd.', 1, 1, 2, 1, 1);
+INSERT INTO `user_details` VALUES(2, 'smkumpal@gmail.com', NULL, 'uploads/suman_paul-1541320289870.JPG', 989098809, 'Suman', 'paul', 'new company', 1, 2, 1, 0, 1);
 
 CREATE TABLE `user_session` (
   `session_id` varchar(255) NOT NULL,
