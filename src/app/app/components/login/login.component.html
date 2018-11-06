@@ -1,0 +1,22 @@
+<div id='login-form'>
+	<form  #userlogin="ngForm" (ngSubmit) = "loginUser(userlogin.value)" ngForm>
+		<div class="form-group" >
+			<label for="email">Email address:</label>
+			<input type="email" name="email_id" class="form-control" id="email" #emailAddress="ngModel" required pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" ngModel>
+			<div class="alert alert-danger" *ngIf="emailAddress.touched && !emailAddress.valid">
+				<span *ngIf="emailAddress.errors.required" >Email is required</span>
+				<span *ngIf="emailAddress.errors.pattern" >Email Address is not valid</span>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="pwd">Password:</label>
+			<input type="password" class="form-control" id="pwd" name="password" #password="ngModel" required ngModel>
+			<div class="alert alert-danger" *ngIf="password.touched && !password.valid">
+					<span *ngIf="password.errors.required" >Email is required</span>
+			</div>
+		</div>
+		<!-- {{userlogin.valid}} -->
+		<button type="submit" class="btn btn-default" [disabled]="!userlogin.valid" >Submit</button>
+	</form>
+</div>

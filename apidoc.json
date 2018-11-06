@@ -1,0 +1,10 @@
+{
+	"name": "Coding challenge – NCR Technosolutions",
+	"version": "1.0.0",
+	"description": "Coding challenge – NCR Technosolutions for MEAN Stack Developers ",
+	"title": "Coding challenge – NCR Technosolutions ",
+	"template": {
+		"withCompare": true,
+		"withGenerator": true
+	}
+}

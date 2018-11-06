@@ -1,0 +1,9 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div id="main">
+	<section *ngIf="!isLoggedIn">
+		<login (logged_in)="updateStatus($event)" ></login>
+	</section>
+	<section *ngIf="isLoggedIn">
+		<user-list (logged_in)="updateStatus($event)"></user-list>
+	</section>
+</div>
