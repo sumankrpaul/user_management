@@ -140,7 +140,7 @@ export default class UserRouter{
 		 * 
 		 */
 
-		this.router.get('/list',(req,res)=>{
+		this.router.get('/list',autheticate,(req,res)=>{
 			self.user.getUserList(req,res);
 		});
 
@@ -196,7 +196,7 @@ export default class UserRouter{
 		 * 
 		 */
 
-		this.router.post('/new',self.upload.single('dp'),(req,res)=>{
+		this.router.post('/new',autheticate,self.upload.single('dp'),(req,res)=>{
 			self.user.addNewUser(req,res);
 		});
 
@@ -260,7 +260,7 @@ export default class UserRouter{
 		 * 
 		 */
 
-		this.router.post('/list',self.upload.single('dp'),(req,res)=>{
+		this.router.post('/:user_id/edit',autheticate,self.upload.single('dp'),(req,res)=>{
 			self.user.editUserDetails(req,res);
 		});
 
@@ -316,7 +316,7 @@ export default class UserRouter{
 		 * 
 		 */
 		
-		this.router.delete('/list',(req,res)=>{
+		this.router.delete('/:user_id/delete',autheticate,(req,res)=>{
 			self.user.deleteUser(req,res);
 		});
 

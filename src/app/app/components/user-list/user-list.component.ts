@@ -29,10 +29,32 @@ export class UserListComponent implements OnInit {
 			self.experience_lvl_list = data.experties_level;
 			self.experties_list = data.experties;
 		}).catch((err)=>{
-			console.log(err);
+			if(err.status == 401){
+				self.logged_in.emit(false);
+			}else{
+
+				console.log(err);
+			}
 		})
 	}
 	
+	deleteUser(user){
+		console.log(user);
+		let self = this;
+		this.user.deleteUser(user).then((data)=>{
+			self.getUserList()
+		}).catch((err)=>{
+			if(err.status == 401){
+				self.logged_in.emit(false);
+			}else{
+				console.log(err);
+				
+			}
+			// console.log(err);
+		})
+
+	}
+
 	ngOnInit() {
 		this.base_url = this.user.base_url;
 		this.getUserList()

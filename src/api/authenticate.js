@@ -3,7 +3,9 @@ const mysql = require('mysql');
 
 let authenticate = function(req,res,next){
 
-    let sessid = req.header['auth-token'];
+    let sessid = req.headers['auth-token'];
+    console.log('req.headers > ', req.headers);
+    console.log('sessid > ', sessid);
     
     if(sessid && sessid!= ''){
         let connection = mysql.createConnection(config);
@@ -12,11 +14,17 @@ let authenticate = function(req,res,next){
                 req.user_id = result[0].user_id;
                 next();
             }else{
-                res.staus(401)
+                res.status(401).json({
+                    status:'failure',
+                    message:'You are not authenticated'
+                })
             }
         })
     }else{
-        res.staus(401)        
+        res.status(401).json({
+            status:'failure',
+            message:'You are not authenticated'
+        })
     }
 }
 

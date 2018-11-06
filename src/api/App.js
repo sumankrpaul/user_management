@@ -14,7 +14,7 @@ const requestOptions = {
 	origin: function (origin , callback) {
 		callback(null, true);
 	  },
-	methods: ['OPTIONS','GET','POST'],
+	methods: ['OPTIONS','GET','POST','DELETE'],
 	credentials: true
   };
 

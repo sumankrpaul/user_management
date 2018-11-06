@@ -22,7 +22,7 @@ export default class User extends Controller{
 
 	async getUserList(req,res){
 		try{
-			let user_list = await super.queryDb('SELECT user_id, user_email_id, user_dp, user_phone_no, user_first_name, user_last_name, user_company_name, experties_name, user_years_of_exp, lvl_name FROM user_details LEFT JOIN experties_list ON user_technical_experties=experties_id LEFT JOIN experiense_lvl_list ON user_experience_level = lvl_id WHERE user_is_active = 1');
+			let user_list = await super.queryDb('SELECT user_id, user_email_id, user_dp, user_phone_no, user_first_name, user_last_name, user_company_name, experties_name, user_years_of_exp, lvl_name FROM user_details LEFT JOIN experties_list ON user_technical_experties=experties_id LEFT JOIN experiense_lvl_list ON user_experience_level = lvl_id WHERE user_is_active = 1 AND user_is_admin = 0');
 			let experiense_lvl_list = await super.queryDb('SELECT lvl_id, lvl_name FROM experiense_lvl_list');
 			let experties_list = await super.queryDb('SELECT experties_id, experties_name FROM experties_list');
 			// console.log('Base URL >>  ', req.ip+':'+req.port);
@@ -37,6 +37,7 @@ export default class User extends Controller{
 						"last_name": user.user_last_name,
 						"email": user.user_email_id,
 						"phone_no": user.user_phone_no,
+						"company_name": user.user_company_name,
 						"experties": user.experties_name,
 						"level_of_experties": user.lvl_name,
 						"years_of_exp": user.user_years_of_exp
@@ -84,9 +85,16 @@ export default class User extends Controller{
 				let isExistExpertiesLvl = await super.queryDb('SELECT * FROM experiense_lvl_list WHERE lvl_id = ? ', [body.level_of_experties]);
 				if(!isExistUser.length && isExistExperties.length && isExistExpertiesLvl.length){
 					
+					let user_dp = '';
+					if(req.filename){
+						user_dp = ('uploads/'+req.filename)
+					}else{
+						user_dp = null;						
+					}
+
 					let isInserted = await super.queryDb('INSERT INTO user_details (user_email_id, user_dp, user_phone_no, user_first_name, user_last_name, user_company_name, user_technical_experties, user_years_of_exp, user_experience_level, user_is_admin, user_is_active) VALUES (?,?,?,?,?,?,?,?,?,?,?)',[
 						body.email_id,
-						('uploads/'+req.filename),
+						user_dp,
 						body.phone_no,
 						body.first_name,
 						body.last_name,
@@ -171,9 +179,16 @@ export default class User extends Controller{
 				
 				if(isExistUser.length && isExistExperties.length && isExistExpertiesLvl.length){
 					
+					let user_dp = '';
+					if(req.filename){
+						user_dp = ('uploads/'+req.filename)
+					}else{
+						user_dp = body.dp;						
+					}
+
 					let isUpdated = await super.queryDb('UPDATE user_details SET user_email_id = ?, user_dp = ?, user_phone_no = ?, user_first_name = ?, user_last_name = ?, user_company_name = ?, user_technical_experties = ?, user_years_of_exp = ?, user_experience_level = ? WHERE user_id = ?',[
 						body.email_id,
-						('uploads/'+req.filename),
+						user_dp,
 						body.phone_no,
 						body.first_name,
 						body.last_name,

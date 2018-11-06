@@ -52,11 +52,35 @@ export class UserService {
 				if(err.error instanceof Error){
 					reject();
 				}else{
-					console.log(err);
+					if(err.status == 401){
+						self.clearSession();
+					}
 					reject(err);
 				}
 			})
 		})
 	}
+
+	deleteUser(user_id){
+		let self= this;
+		return new Promise((resolve,reject)=>{
+			let session_id = self.getSession();
+			let headers = new HttpHeaders().set('Content-Type', 'application/json').set('auth-token', session_id)
+			self.http.delete(self.base_url + '/users/'+ user_id +'/delete', {headers: headers}).subscribe((data)=>{
+				resolve(data)
+			},(err : HttpErrorResponse)=>{
+				if(err.error instanceof Error){
+					reject();
+				}else{
+					if(err.status == 401){
+						self.clearSession();
+					}
+					reject(err);
+				}
+			})
+		})
+	}
+
+	
 
 }
